@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Compressor;
 /**
  * Add your docs here.
  */
-public class Pneumatics extends Subsystem {
+public class CompressorControl extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -33,8 +33,5 @@ public class Pneumatics extends Subsystem {
   public void close() {
     comp1.stop();
   }
-
-
-
-
+  
 }
