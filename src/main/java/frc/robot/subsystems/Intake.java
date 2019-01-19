@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * Add your docs here.
@@ -15,7 +17,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  DoubleSolenoid dSolenoid1 = new DoubleSolenoid(RobotMap.Intake_dSolenoid1_Deploy, RobotMap.Intake_dSolenoid1_Retract);
 
+  public void deploy(){
+    dSolenoid1.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void retract(){
+    dSolenoid1.set(DoubleSolenoid.Value.kReverse);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

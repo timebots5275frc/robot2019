@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 
 import frc.robot.subsystems.CompressorControl;
 
@@ -38,12 +39,9 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-
+  public static Intake intakePneumatics = new Intake();
 
   public static CompressorControl compressor = new CompressorControl();
-
-
-
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
