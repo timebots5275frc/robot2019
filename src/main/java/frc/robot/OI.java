@@ -8,15 +8,25 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Button;
+
+import frc.robot.commands.CompressorOff;
+import frc.robot.commands.CompressorOn;
+
 
 
 /**
  * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * interface to the commands and   command groups that allow control of the robot.
  */
 public class OI {
+
   public static Joystick driveJoystick = new Joystick(0);
   
+  Button button2 = new JoystickButton(driveJoystick, 7);
+  
+  button2.whenPressed(new CompressorOn() );
 
 
   //// CREATING BUTTONS
@@ -26,6 +36,5 @@ public class OI {
   // number it is.
   // Joystick stick = new Joystick(port);
   // Button button = new JoystickButton(stick, buttonNumber);
-
 
 }
