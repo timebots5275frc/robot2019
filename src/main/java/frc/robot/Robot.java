@@ -15,7 +15,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 
-// this is a test
+import frc.robot.subsystems.CompressorControl;
+
+import frc.robot.OI;
+
+import frc.robot.commands.CompressorOff;
+import frc.robot.commands.CompressorOn;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +37,12 @@ public class Robot extends TimedRobot {
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+
+  public static CompressorControl compressor = new CompressorControl();
+
+
 
   /**
    * This function is run when the robot is first started up and should be
@@ -114,6 +127,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   }
 
   /**
@@ -122,6 +136,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    
+
+    OI.button1.whenPressed(new CompressorOn());
+
+    OI.button2.whenPressed(new CompressorOff());
+
   }
 
   /**
