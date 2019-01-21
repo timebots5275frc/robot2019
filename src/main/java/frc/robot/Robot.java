@@ -19,9 +19,6 @@ import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
 import frc.robot.commands.IntakePistonOut;
 import frc.robot.subsystems.CompressorControl;
-
-import frc.robot.OI;
-
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
@@ -35,7 +32,9 @@ import frc.robot.commands.CompressorOn;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystAem = new ExampleSubsystem();
+  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static CompressorControl compressor = new CompressorControl();
+  public static Intake intakePneumatics = new Intake();
   public static OI m_oi;
 
   Command m_autonomousCommand;

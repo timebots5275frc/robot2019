@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  
   DoubleSolenoid dSolenoid1 = new DoubleSolenoid(RobotMap.Intake_dSolenoid1_Deploy, RobotMap.Intake_dSolenoid1_Retract);
 
   public void deploy(){
