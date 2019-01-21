@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
-
+import frc.robot.OI;
+import frc.robot.commands.IntakePistonIn;
+import frc.robot.commands.IntakePistonOut;
 import frc.robot.subsystems.CompressorControl;
 
 import frc.robot.OI;
@@ -133,13 +135,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
-    
-
+    OI.pistonDeploy.whenPressed(new IntakePistonOut());
+    OI.pistonRetract.whenPressed(new IntakePistonIn());
     OI.button1.whenPressed(new CompressorOn());
-
     OI.button2.whenPressed(new CompressorOff());
-
   }
 
   /**
