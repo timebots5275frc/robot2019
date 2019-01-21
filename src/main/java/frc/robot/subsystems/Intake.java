@@ -26,6 +26,10 @@ public class Intake extends Subsystem {
   public void retract(){
     dSolenoid1.set(DoubleSolenoid.Value.kReverse);
   }
+
+  public void Off(){
+    dSolenoid1.set(DoubleSolenoid.Value.kOff);
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
