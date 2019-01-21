@@ -8,13 +8,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 
-
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.IntakePistonOut;
+import frc.robot.commands.IntakePistonIn;
+
 
 
 /**
@@ -24,7 +28,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
   public static Joystick driveJoystick = new Joystick(0);
+
+  Button pistonOut = new JoystickButton(driveJoystick, 3);
+  Button pistonRetract = new JoystickButton(driveJoystick, 4);
   
+  pistonOut.whenpressed(new IntakePistonOut());
+  pistonRetract.whenpressed(new IntakePistonIn());
   public static Button button1 = new JoystickButton(driveJoystick, 7);
   public static Button button2 = new JoystickButton(driveJoystick, 8);
 

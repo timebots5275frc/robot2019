@@ -40,7 +40,6 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   public static Intake intakePneumatics = new Intake();
-
   public static CompressorControl compressor = new CompressorControl();
   /**
    * This function is run when the robot is first started up and should be
