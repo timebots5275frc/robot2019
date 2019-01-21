@@ -8,32 +8,18 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * Add your docs here.
  */
-public class Intake extends Subsystem {
+public class Arm extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  DoubleSolenoid dSolenoid1 = new DoubleSolenoid(RobotMap.Intake_dSolenoid1_Deploy, RobotMap.Intake_dSolenoid1_Retract);
-  public boolean solenoidOn = false;
+
+  
 
 
-  public void deploy(){
-    dSolenoid1.set(DoubleSolenoid.Value.kForward);
-    solenoidOn = true;
-  }
 
-  public void retract(){
-    dSolenoid1.set(DoubleSolenoid.Value.kReverse);
-    solenoidOn = false;
-  }
-
-  public void Off(){
-    dSolenoid1.set(DoubleSolenoid.Value.kOff);
-  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

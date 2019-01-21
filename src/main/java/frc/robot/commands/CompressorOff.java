@@ -35,7 +35,7 @@ public class CompressorOff extends Command {
   @Override
   protected boolean isFinished() {
     //System.out.println("COff isFinished: " + Robot.compressor.compOn);
-    if (Robot.compressor.compOn == false){
+    if (Robot.compressor.compOn == false ){
       //System.out.println("COff isFinished runs true");
       return true;
     }

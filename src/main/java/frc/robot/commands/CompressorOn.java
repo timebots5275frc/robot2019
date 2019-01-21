@@ -38,8 +38,9 @@ public class CompressorOn extends Command {
       //System.out.println("COn isFinished true");
       //System.out.println(Robot.compressor.compOn);
       return true;
+    } else {
+      return false;
     }
-    else return false;
   }
 
   // Called once after isFinished returns true
