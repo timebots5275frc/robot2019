@@ -132,10 +132,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    OI.pistonDeploy.whenPressed(new IntakePistonOut());
-    OI.pistonRetract.whenPressed(new IntakePistonIn());
-    OI.button1.whenPressed(new CompressorOn());
-    OI.button2.whenPressed(new CompressorOff());
+    OI.pistonDeploy.whenPressed(new IntakePistonOut()); /// 3
+    OI.pistonRetract.whenPressed(new IntakePistonIn()); /// 4
+
+    OI.button1.whenPressed(new CompressorOn()); /// 7
+    OI.button2.whenPressed(new CompressorOff()); /// 8
   }
 
   /**

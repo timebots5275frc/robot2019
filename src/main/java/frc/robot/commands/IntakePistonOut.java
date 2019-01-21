@@ -33,6 +33,7 @@ public class IntakePistonOut extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //System.out.print(Robot.intakePneumatics.solenoidOn);
     if (Robot.intakePneumatics.solenoidOn == true ) {
       return true;
     } else {

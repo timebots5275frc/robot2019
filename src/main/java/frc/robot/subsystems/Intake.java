@@ -31,11 +31,6 @@ public class Intake extends Subsystem {
     solenoidOn = false;
   }
 
-  public void Off(){
-    dSolenoid1.set(DoubleSolenoid.Value.kOff);
-    solenoidOn = false;
-  }
-
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
