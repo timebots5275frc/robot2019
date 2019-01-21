@@ -27,13 +27,19 @@ public class CompressorOn extends Command {
   protected void execute() {
 
     Robot.compressor.open();
+    //System.out.println("Compressor On");
     
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (Robot.compressor.compOn == true){
+      //System.out.println("COn isFinished true");
+      //System.out.println(Robot.compressor.compOn);
+      return true;
+    }
+    else return false;
   }
 
   // Called once after isFinished returns true

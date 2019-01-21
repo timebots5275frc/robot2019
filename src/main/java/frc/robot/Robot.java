@@ -19,12 +19,9 @@ import frc.robot.subsystems.CompressorControl;
 
 import frc.robot.OI;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
-import frc.robot.subsystems.CompressorControl;
 
 
 /**
@@ -130,6 +127,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   }
 
   /**
@@ -138,11 +136,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
     
 
-    OI.button1.whenPressed(new CompressorOn() );
+    OI.button1.whenPressed(new CompressorOn());
 
-    OI.button2.whenPressed(new CompressorOff() );
+    OI.button2.whenPressed(new CompressorOff());
 
   }
 

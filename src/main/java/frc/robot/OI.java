@@ -11,10 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 
-import frc.robot.commands.CompressorOff;
-import frc.robot.commands.CompressorOn;
-
-import frc.robot.subsystems.CompressorControl;
 
 
 /**

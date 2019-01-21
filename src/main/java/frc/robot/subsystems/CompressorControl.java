@@ -18,7 +18,8 @@ public class CompressorControl extends Subsystem {
   // Put methods for controlling this subsystem       
   // here. Call these from Commands.
 
-  Compressor comp1 = new Compressor(0);
+  public static Compressor comp1 = new Compressor(0);
+  public boolean compOn = false;
 
   @Override
   public void initDefaultCommand() {
@@ -28,10 +29,12 @@ public class CompressorControl extends Subsystem {
 
   public void open() {
     comp1.start();
+    compOn = true;
   }
 
   public void close() {
     comp1.stop();
+    compOn = false;
   }
   
 }
