@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
+import frc.robot.subsystems.CompressorControl;
 
 
 /**
@@ -24,9 +25,12 @@ public class OI {
 
   public static Joystick driveJoystick = new Joystick(0);
   
-  Button button2 = new JoystickButton(driveJoystick, 7);
-  
-  button2.whenPressed(new CompressorOn() );
+  Button button1 = new JoystickButton(driveJoystick, 7);
+  Button button2 = new JoystickButton(driveJoystick, 8);
+
+  button1.whenPressed(new CompressorOn() );
+
+  button2.whenPressed(new CompressorOff() );
 
 
   //// CREATING BUTTONS
