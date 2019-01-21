@@ -25,12 +25,12 @@ public class OI {
 
   public static Joystick driveJoystick = new Joystick(0);
   
-  Button button1 = new JoystickButton(driveJoystick, 7);
-  Button button2 = new JoystickButton(driveJoystick, 8);
+  public static Button button1 = new JoystickButton(driveJoystick, 7);
+  public static Button button2 = new JoystickButton(driveJoystick, 8);
 
-  button1.whenPressed(new CompressorOn() );
 
-  button2.whenPressed(new CompressorOff() );
+
+  
 
 
   //// CREATING BUTTONS

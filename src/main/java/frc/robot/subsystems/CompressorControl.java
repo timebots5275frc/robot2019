@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.Compressor;
  * Add your docs here.
  */
 public class CompressorControl extends Subsystem {
-  // Put methods for controlling this subsystem
+  // Put methods for controlling this subsystem       
   // here. Call these from Commands.
 
   Compressor comp1 = new Compressor(0);
