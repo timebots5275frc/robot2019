@@ -29,9 +29,9 @@ public class DriveTrain extends Subsystem {
   SpeedControllerGroup leftSCG = new SpeedControllerGroup(frontLeft, backLeft);
   SpeedControllerGroup rightSCG = new SpeedControllerGroup(frontRight, backRight);
 
-  DifferentialDrive drive = new DifferentialDrive(leftSCG, rightSCG);
-  
+  public DifferentialDrive drive = new DifferentialDrive(leftSCG, rightSCG);
 
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
