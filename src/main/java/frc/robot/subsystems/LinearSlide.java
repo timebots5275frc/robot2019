@@ -9,13 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-// https://wpilib.screenstepslive.com/s/currentCS/searches?utf8=%E2%9C%93&text=linear+scale&commit=Search
-
-
 /**
  * Add your docs here.
  */
-public class LinearScale extends Subsystem {
+public class LinearSlide extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
