@@ -24,4 +24,9 @@ public class RobotMap {
   public int BACK_RIGHT_TALON = 2;
   public int BACK_LEFT_TALON = 3;
 
+
+  public static final int Intake_dSolenoid1_Deploy = 1;
+  public static final int Intake_dSolenoid1_Retract = 2;
+  
+
 }
