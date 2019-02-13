@@ -150,6 +150,11 @@ public class Robot extends TimedRobot {
 
     OI.button2.whenPressed(new CompressorOff());
 
+    OI.pistonDeploy.whenPressed(new IntakePistonOut()); /// 3
+    OI.pistonRetract.whenPressed(new IntakePistonIn()); /// 4
+
+    OI.button1.whenPressed(new CompressorOn()); /// 7
+    OI.button2.whenPressed(new CompressorOff()); /// 8
   }
 
   /**
