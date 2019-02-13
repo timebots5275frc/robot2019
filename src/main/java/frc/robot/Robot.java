@@ -38,6 +38,7 @@ import frc.robot.commands.CompressorOn;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static CompressorControl compressor = new CompressorControl();
+  
   public static Intake intakePneumatics = new Intake();
   public static OI m_oi;
 
@@ -47,7 +48,6 @@ public class Robot extends TimedRobot {
 
 
 
-  public static CompressorControl compressor = new CompressorControl();
 
 
 
