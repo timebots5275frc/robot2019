@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.OI;
@@ -39,6 +40,8 @@ public class Robot extends TimedRobot {
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public TeleopDrive teleopDriveCommand = new TeleopDrive();
+
 
   /**
    * This function is run when the robot is first started up and should be
@@ -132,6 +135,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    teleopDriveCommand.start();
+    
+
+    OI.button1.whenPressed(new CompressorOn());
+
+    OI.button2.whenPressed(new CompressorOff());
+
     OI.pistonDeploy.whenPressed(new IntakePistonOut()); /// 3
     OI.pistonRetract.whenPressed(new IntakePistonIn()); /// 4
 
