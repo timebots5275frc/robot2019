@@ -8,6 +8,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.networktables.NetworkTable;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -15,6 +18,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class LinearSlide extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private TalonSRX slideMotor = new TalonSRX(RobotMap.slideTalon);
+  
 
   @Override
   public void initDefaultCommand() {
