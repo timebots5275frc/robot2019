@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
-
-import frc.robot.subsystems.CompressorControl;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.OI;
-
+import frc.robot.commands.IntakePistonIn;
+import frc.robot.commands.IntakePistonOut;
+import frc.robot.subsystems.CompressorControl;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
@@ -33,16 +33,14 @@ import frc.robot.commands.CompressorOn;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystAem = new ExampleSubsystem();
+  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static CompressorControl compressor = new CompressorControl();
+  public static Intake intakePneumatics = new Intake();
   public static OI m_oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
-
-  public static DriveTrain driveTrain = new DriveTrain();
-  public static CompressorControl compressor = new CompressorControl();
-
 
 
   /**
@@ -144,6 +142,11 @@ public class Robot extends TimedRobot {
 
     OI.button2.whenPressed(new CompressorOff());
 
+    OI.pistonDeploy.whenPressed(new IntakePistonOut()); /// 3
+    OI.pistonRetract.whenPressed(new IntakePistonIn()); /// 4
+
+    OI.button1.whenPressed(new CompressorOn()); /// 7
+    OI.button2.whenPressed(new CompressorOff()); /// 8
   }
 
   /**

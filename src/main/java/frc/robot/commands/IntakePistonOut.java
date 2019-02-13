@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
-public class CompressorOn extends Command {
-  public CompressorOn() {
+public class IntakePistonOut extends Command {
+  public IntakePistonOut() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    //requires(Intake);
   }
 
   // Called just before this Command runs the first time
@@ -25,22 +25,21 @@ public class CompressorOn extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    Robot.compressor.open();
-    //System.out.println("Compressor On");
     
+    Robot.intakePneumatics.deploy();
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.compressor.compOn == true){
-      //System.out.println("COn isFinished true");
-      //System.out.println(Robot.compressor.compOn);
+    //System.out.print(Robot.intakePneumatics.solenoidOn);
+    if (Robot.intakePneumatics.solenoidOn == true ) {
       return true;
     } else {
       return false;
     }
+
   }
 
   // Called once after isFinished returns true
