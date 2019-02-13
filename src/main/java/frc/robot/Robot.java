@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
+    teleopDriveCommand.start();
     
 
     OI.button1.whenPressed(new CompressorOn());
