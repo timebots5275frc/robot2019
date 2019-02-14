@@ -14,16 +14,10 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  public int FRONT_RIGHT_VICTOR = 0;
-  public int FRONT_LEFT_VICTOR = 1;
-  public int BACK_RIGHT_VICTOR = 2;
-  public int BACK_LEFT_VICTOR = 3;
-
-  public int FRONT_RIGHT_TALON = 0;
-  public int FRONT_LEFT_TALON = 1;
-  public int BACK_RIGHT_TALON = 2;
-  public int BACK_LEFT_TALON = 3;
-
+  public static int RIGHT_VICTOR = 0;
+  public static int LEFT_VICTOR = 1;
+  public static int RIGHT_TALON = 0;
+  public static int LEFT_TALON = 1;
 
   public static final int Intake_dSolenoid1_Deploy = 1;
   public static final int Intake_dSolenoid1_Retract = 2;
