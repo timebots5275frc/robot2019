@@ -1,10 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
+/**
+ * Subsystem representing an elevator consisting of a Victor SPX and two limit switches (one high and one low)
+ */
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -27,6 +23,7 @@ public class Elevator extends Subsystem {
   private boolean invertSwitches = false;
   public ElevatorSeek deployCommand = new ElevatorSeek(this, ElevatorPosition.HIGH, .5);
   public ElevatorSeek retractCommand = new ElevatorSeek(this, ElevatorPosition.LOW, -.5);
+
   /**
    * Constructor
    * @param _highSwitch high (on when deployed) switch
@@ -52,7 +49,7 @@ public class Elevator extends Subsystem {
   }
 
   /**
-   * Constructor
+   * Constructor (this is clapped because you can't pass the Elevator object as a parameter to the ElevatorSeek constructor)
    * @param _highSwitch high (on when deployed, unless invertSwitches is true) switch
    * @param _lowSwitch low (on when retracted, unless invertSwitches is true) switch
    * @param _invertSwitches true if switches are /off/ when expected to be on

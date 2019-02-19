@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,6 +21,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 
 import frc.robot.subsystems.CompressorControl;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
@@ -25,6 +29,7 @@ import frc.robot.commands.IntakePistonOut;
 import frc.robot.subsystems.CompressorControl;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
+import frc.robot.commands.ElevatorSeek;
 
 
 
@@ -44,6 +49,17 @@ public class Robot extends TimedRobot {
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  Elevator rearElevator = new Elevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
+                                       new DigitalInput(RobotMap.REAR_LOW_LIMIT),
+                                       new VictorSPX(RobotMap.REAR_ELEVATOR_VICTOR),
+                                       false);
+  Elevator frontElevator = new Elevator(new DigitalInput(RobotMap.FRONT_HIGH_LIMIT),
+                                       new DigitalInput(RobotMap.FRONT_LOW_LIMIT),
+                                       new VictorSPX(RobotMap.FRONT_ELEVATOR_VICTOR),
+                                       false);
+
+  );
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
 
 
@@ -61,6 +77,11 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    rearElevator.retractCommand = new ElevatorSeek(rearElevator, ElevatorPosition.LOW, -.5);
+    rearElevator.deployCommand = new ElevatorSeek(rearElevator, ElevatorPosition.HIGH, .5);
+    frontElevator.retractCommand = new ElevatorSeek(frontElevator, ElevatorPosition.LOW, -.5);
+    frontElevator.deployCommand = new ElevatorSeek(frontElevator, ElevatorPosition.HIGH, .5);
+
   }
 
   /**
