@@ -18,7 +18,7 @@ public class ElevatorSeek extends Command {
   ElevatorPosition desiredpos;
   double maxOutput;
   /**
-   * 
+   *  Constructor
    * @param _elevator the elevator to move
    * @param _pos the desired output value (as defined in frc.robot.ElevatorPosition)
    * @param _maxOutput the maximum output value we can write to the elevator's motor - pay attention to positive/negative
