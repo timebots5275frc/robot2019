@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -53,14 +54,23 @@ public class Robot extends TimedRobot {
   Elevator rearElevator = new Elevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.REAR_LOW_LIMIT),
                                        new VictorSPX(RobotMap.REAR_ELEVATOR_VICTOR),
-                                       false);
+                                       false,
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .3),
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -.4)
+                                       );
   Elevator frontElevator = new Elevator(new DigitalInput(RobotMap.FRONT_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.FRONT_LOW_LIMIT),
                                        new VictorSPX(RobotMap.FRONT_ELEVATOR_VICTOR),
-                                       false);
+                                       false,
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .5),
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -1)
+                                       );
 
-  );
+  
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
+
+  //DO NOT COMMIT
+  private VictorSPX pusher = new VictorSPX(RobotMap.PUSHER_VICTOR);
 
 
 
@@ -77,10 +87,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-    rearElevator.retractCommand = new ElevatorSeek(rearElevator, ElevatorPosition.LOW, -.5);
-    rearElevator.deployCommand = new ElevatorSeek(rearElevator, ElevatorPosition.HIGH, .5);
-    frontElevator.retractCommand = new ElevatorSeek(frontElevator, ElevatorPosition.LOW, -.5);
-    frontElevator.deployCommand = new ElevatorSeek(frontElevator, ElevatorPosition.HIGH, .5);
 
   }
 
@@ -156,6 +162,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
+    teleopDriveCommand.start();
+    
   }
 
   /**
@@ -165,11 +173,38 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
+
     
 
     OI.button1.whenPressed(new CompressorOn());
 
     OI.button2.whenPressed(new CompressorOff());
+    // NOT TO BE COMMITTED
+    // A,B,X,Y
+    if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
+      rearElevator.deployCommand.cancel();
+      rearElevator.retractCommand.start();
+    }if (OI.xbController.getRawButton(2) && !rearElevator.deployCommand.isRunning()) {
+      rearElevator.retractCommand.cancel();
+      rearElevator.deployCommand.start();
+    }if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
+      System.out.println("button 3");
+      frontElevator.deployCommand.cancel();
+      frontElevator.retractCommand.start();
+    }if (OI.xbController.getRawButton(4) && !frontElevator.deployCommand.isRunning()) {
+      frontElevator.retractCommand.cancel();
+      frontElevator.deployCommand.start();
+    }
+    if (OI.xbController.getRawButton(5)){
+      pusher.set(ControlMode.PercentOutput, (OI.xbController.getRawAxis(1) * .4));
+    }
+    else pusher.set(ControlMode.PercentOutput, 0.0);
+    // System.out.println("FL FH RL RH");
+    // System.out.println(frontElevator.highSwitch.get());
+    // System.out.println(frontElevator.lowSwitch.get());
+    // System.out.println(rearElevator.highSwitch.get());
+    // System.out.println(rearElevator.lowSwitch.get());
+
 
   }
 
