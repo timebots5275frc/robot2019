@@ -14,9 +14,10 @@ import frc.robot.ElevatorPosition;
 import frc.robot.subsystems.Elevator;
 
 public class ElevatorSeek extends Command {
-  Elevator elevator;
-  ElevatorPosition desiredpos;
-  double maxOutput;
+
+  Elevator elevator = null;
+  public ElevatorPosition desiredpos;
+  public double maxOutput;
   /**
    *  Constructor
    * @param _elevator the elevator to move
@@ -32,6 +33,7 @@ public class ElevatorSeek extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("ElevatorSeek initialize, pos: " + desiredpos + " elevator vport: " + elevator.victor.getDeviceID());
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,13 +45,18 @@ public class ElevatorSeek extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (elevator.getPosition() == desiredpos) return true;
+    if (elevator.getPosition() == desiredpos){
+      return true;
+    } 
     else return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    elevator.victor.set(ControlMode.PercentOutput, maxOutput * 1);
+    System.out.println("ElevatorSeek end, pos: " + desiredpos + " elevator vport: " + elevator.victor.getDeviceID());
+
   }
 
   // Called when another command which requires one or more of the same

@@ -27,6 +27,8 @@ public class RobotMap {
   public static int FRONT_HIGH_LIMIT = 1;
   public static int FRONT_LOW_LIMIT = 0;  
 
+  public static int PUSHER_VICTOR = 5;
+
   public static final int Intake_dSolenoid1_Deploy = 1;
   public static final int Intake_dSolenoid1_Retract = 2;
   

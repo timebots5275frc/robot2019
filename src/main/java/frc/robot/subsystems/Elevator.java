@@ -18,12 +18,21 @@ import frc.robot.commands.ElevatorSeek;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private DigitalInput highSwitch, lowSwitch;
+  public DigitalInput highSwitch, lowSwitch;
   public VictorSPX victor;
   private boolean invertSwitches = false;
-  public ElevatorSeek deployCommand = new ElevatorSeek(this, ElevatorPosition.HIGH, .5);
-  public ElevatorSeek retractCommand = new ElevatorSeek(this, ElevatorPosition.LOW, -.5);
+  public ElevatorSeek deployCommand ; //= new ElevatorSeek(this, ElevatorPosition.HIGH, .5);
+  public ElevatorSeek retractCommand; // = new ElevatorSeek(this, ElevatorPosition.LOW, -.5);
 
+  /**
+   * Do not use this unless you know what you are doing!
+   * Used so that you can create an elevator object in one line
+   * (ElevatorSeek objects require an Elevator object to attach to)
+   * 
+   */
+  public Elevator(){
+    System.err.println("An empty elevator object is being created - use caution!");
+  }
   /**
    * Constructor
    * @param _highSwitch high (on when deployed) switch
@@ -59,8 +68,8 @@ public class Elevator extends Subsystem {
    */
   public Elevator(DigitalInput _highSwitch, DigitalInput _lowSwitch, VictorSPX _victor, boolean _invertSwitches, ElevatorSeek _deployCommand, ElevatorSeek _retractCommand){
     this(_highSwitch, _lowSwitch, _victor, _invertSwitches);
-    deployCommand = _deployCommand;
-    retractCommand = _retractCommand;
+    deployCommand = new ElevatorSeek(this, _deployCommand.desiredpos, _deployCommand.maxOutput);
+    retractCommand = new ElevatorSeek(this, _retractCommand.desiredpos, _retractCommand.maxOutput);
   }
 
   /**
@@ -74,6 +83,10 @@ public class Elevator extends Subsystem {
     if (_getSwitch(highSwitch)) i += ElevatorPosition.HIGH.ordinal();
     if (_getSwitch(lowSwitch)) i += ElevatorPosition.LOW.ordinal();
     return ElevatorPosition.values()[i];
+  }
+  public void cancelAll(){
+    deployCommand.cancel();
+    retractCommand.cancel();
   }
 
   private boolean _getSwitch(DigitalInput input){
