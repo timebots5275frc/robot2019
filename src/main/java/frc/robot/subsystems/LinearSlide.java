@@ -18,7 +18,7 @@ import frc.robot.RobotMap;
 public class LinearSlide extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private TalonSRX slideMotor = new TalonSRX(RobotMap.slideTalon);
+  private TalonSRX slideMotor = new TalonSRX(RobotMap.SLIDE_TALON);
   
 
   @Override

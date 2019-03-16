@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,14 +16,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.subsystems.CompressorControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
 import frc.robot.commands.IntakePistonOut;
-import frc.robot.subsystems.CompressorControl;
+import frc.robot.subsystems.Arm;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
@@ -46,6 +47,9 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
 
+  //DO NOT COMMIT -------
+  public static Arm arm = new Arm();
+  public Joystick j = new Joystick(0);
 
 
 
@@ -61,6 +65,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
   }
 
   /**
@@ -157,5 +162,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    // DO NOT COMMIT -----------
+    if (!j.getRawButton(2)) System.out.println(arm.jLoop(j.getRawAxis(1)));
+    else System.out.println(arm.loop(arm.absolutepos));
   }
 }
