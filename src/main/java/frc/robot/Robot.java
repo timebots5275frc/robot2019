@@ -24,6 +24,7 @@ import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
 import frc.robot.commands.IntakePistonOut;
 import frc.robot.subsystems.Arm;
+import frc.robot.commands.ArmZero;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 
@@ -45,9 +46,10 @@ public class Robot extends TimedRobot {
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  ArmZero zeroCommand = new ArmZero();
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
 
-  //DO NOT COMMIT -------
+
   public static Arm arm = new Arm();
   public Joystick j = new Joystick(0);
 
@@ -66,6 +68,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
+    System.out.println("robot init");
   }
 
   /**
@@ -108,6 +111,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    arm.setZero();
+    arm.resetZero();
+    zeroCommand.start();
+    System.out.println("autonomous init");
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -120,6 +127,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
+
   }
 
   /**
@@ -128,6 +136,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    if (zeroCommand.isCompleted()){
+      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+    }
   }
 
   @Override
@@ -148,12 +159,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-
-    
-
-    OI.button1.whenPressed(new CompressorOn());
-
-    OI.button2.whenPressed(new CompressorOff());
+    if (zeroCommand.isCompleted()){
+      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+    }
 
   }
 
@@ -162,8 +170,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    // DO NOT COMMIT -----------
-    if (!j.getRawButton(2)) System.out.println(arm.jLoop(j.getRawAxis(1)));
-    else System.out.println(arm.loop(arm.absolutepos));
+    System.out.println(Integer.toString(arm.getPosition()) + " zpos: " + Integer.toString(arm.zeroedpos));
   }
 }
