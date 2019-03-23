@@ -192,16 +192,12 @@ public class Robot extends TimedRobot {
       frontElevator.cancelAll();
       frontElevator.deployCommand.start();
     }
-    if (OI.xbController.getRawButton(5)){
-      pusher.set(ControlMode.PercentOutput, (OI.xbController.getRawAxis(1) * .4));
-      System.out.println((OI.xbController.getRawAxis(1) * .4));
-    }
     if (OI.xbController.getRawButton(6)){
       System.out.println("elevator cancel");
       frontElevator.cancelAll();
       rearElevator.cancelAll();
     }
-    else pusher.set(ControlMode.PercentOutput, 0.0);
+    else pusher.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(1));
 
 
 
