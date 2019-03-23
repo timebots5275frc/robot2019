@@ -9,10 +9,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveTrain;
 
-public class TeleopDrive extends Command {
-  public TeleopDrive() {
+public class ArmZero extends Command {
+  public ArmZero() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,14 +24,19 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double throt = (Robot.m_oi.driveJoystick.getRawAxis(3) / 2) +1;
-    DriveTrain.drive.arcadeDrive(Robot.m_oi.driveJoystick.getRawAxis(2) * (throt / 2), throt * Robot.m_oi.driveJoystick.getRawAxis(1) * -1);
+    Robot.arm.incrementalLoop(10);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if (Robot.arm.atStop()){
+      Robot.arm.setZero();
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   // Called once after isFinished returns true

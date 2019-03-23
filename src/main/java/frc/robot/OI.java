@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 public class OI {
 
   public static Joystick driveJoystick = new Joystick(0);
+  public static Joystick xbController = new Joystick(2);
 
   public static Button pistonDeploy = new JoystickButton(driveJoystick, 3);
   public static Button pistonRetract = new JoystickButton(driveJoystick, 4);

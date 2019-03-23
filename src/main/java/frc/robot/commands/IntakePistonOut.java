@@ -25,7 +25,7 @@ public class IntakePistonOut extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    System.out.println("intakepout");
     Robot.intakePneumatics.deploy();
 
   }

@@ -19,6 +19,21 @@ public class RobotMap {
   public static int RIGHT_TALON = 0;
   public static int LEFT_TALON = 1;
 
+  public static int FRONT_ELEVATOR_VICTOR = 2;
+  public static int REAR_ELEVATOR_VICTOR = 3;  
+
+  public static int REAR_HIGH_LIMIT = 3;
+  public static int REAR_LOW_LIMIT = 2;
+  public static int FRONT_HIGH_LIMIT = 1;
+  public static int FRONT_LOW_LIMIT = 0;  
+
+  public static int PUSHER_VICTOR = 5;
+
+  public static int ARM_TALON = 3;
+  public static int SLIDE_TALON = 2;
+
+  public static int ARM_STOP_SWITCH = 4;
+
   public static final int Intake_dSolenoid1_Deploy = 1;
   public static final int Intake_dSolenoid1_Retract = 2;
   
