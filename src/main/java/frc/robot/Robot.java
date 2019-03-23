@@ -134,6 +134,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    teleopDriveCommand.start();
+
     
   }
 
@@ -144,11 +146,11 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    
-
+    OI.pistonDeploy.whenPressed(new IntakePistonOut());
+    OI.pistonRetract.whenPressed(new IntakePistonOut());
     OI.button1.whenPressed(new CompressorOn());
-
     OI.button2.whenPressed(new CompressorOff());
+
 
   }
 

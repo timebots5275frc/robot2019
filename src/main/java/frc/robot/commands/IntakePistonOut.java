@@ -7,10 +7,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.Robot;
 
-public class IntakePistonOut extends Command {
+public class IntakePistonOut extends InstantCommand {
   public IntakePistonOut() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
