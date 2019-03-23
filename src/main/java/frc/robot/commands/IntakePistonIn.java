@@ -7,10 +7,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakePistonIn extends InstantCommand {
+public class IntakePistonIn extends Command {
   public IntakePistonIn() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -24,6 +24,7 @@ public class IntakePistonIn extends InstantCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("intakepin");
     Robot.intakePneumatics.retract();
     
   }

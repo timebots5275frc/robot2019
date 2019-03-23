@@ -49,14 +49,17 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
   Command m_autonomousCommand;
+  IntakePistonIn pisIn = new IntakePistonIn();
+  IntakePistonOut pisOut = new IntakePistonOut();
+
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   Elevator rearElevator = new Elevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.REAR_LOW_LIMIT),
                                        new VictorSPX(RobotMap.REAR_ELEVATOR_VICTOR),
                                        false,
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .3),
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -.4)
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .3, 0.0),
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -.4, .5)
                                        );
   Elevator frontElevator = new Elevator(new DigitalInput(RobotMap.FRONT_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.FRONT_LOW_LIMIT),
@@ -163,7 +166,6 @@ public class Robot extends TimedRobot {
     }
     teleopDriveCommand.start();
 
-
     
   }
 
@@ -174,10 +176,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    OI.pistonDeploy.whenPressed(new IntakePistonOut());
-    OI.pistonRetract.whenPressed(new IntakePistonOut());
-    OI.button1.whenPressed(new CompressorOn());
-    OI.button2.whenPressed(new CompressorOff());
+    OI.pistonDeploy.whenPressed(pisOut);
+    OI.pistonRetract.whenPressed(pisIn);
 
     if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
       rearElevator.cancelAll();
@@ -194,6 +194,12 @@ public class Robot extends TimedRobot {
     }
     if (OI.xbController.getRawButton(5)){
       pusher.set(ControlMode.PercentOutput, (OI.xbController.getRawAxis(1) * .4));
+      System.out.println((OI.xbController.getRawAxis(1) * .4));
+    }
+    if (OI.xbController.getRawButton(6)){
+      System.out.println("elevator cancel");
+      frontElevator.cancelAll();
+      rearElevator.cancelAll();
     }
     else pusher.set(ControlMode.PercentOutput, 0.0);
 
