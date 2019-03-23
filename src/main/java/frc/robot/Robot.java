@@ -165,7 +165,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
     if (zeroCommand.isCompleted()){
-      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+      arm.incrementalLoop(OI.xbController.getRawAxis(5) * 10);
     }
   }
 
@@ -190,7 +190,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     if (zeroCommand.isCompleted()){
-      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+      arm.incrementalLoop(OI.xbController.getRawAxis(5) * 10);
     }
 
     OI.pistonDeploy.whenPressed(pisOut);
