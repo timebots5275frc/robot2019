@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -19,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ExampleSubsystem;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.subsystems.CompressorControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
@@ -27,7 +28,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
 import frc.robot.commands.IntakePistonOut;
-import frc.robot.subsystems.CompressorControl;
+import frc.robot.subsystems.Arm;
+import frc.robot.commands.ArmZero;
 import frc.robot.commands.CompressorOff;
 import frc.robot.commands.CompressorOn;
 import frc.robot.commands.ElevatorSeek;
@@ -53,6 +55,7 @@ public class Robot extends TimedRobot {
   IntakePistonOut pisOut = new IntakePistonOut();
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  ArmZero zeroCommand = new ArmZero();
 
   Elevator rearElevator = new Elevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.REAR_LOW_LIMIT),
@@ -75,6 +78,8 @@ public class Robot extends TimedRobot {
   //DO NOT COMMIT
   private VictorSPX pusher = new VictorSPX(RobotMap.PUSHER_VICTOR);
 
+  public static Arm arm = new Arm();
+  public Joystick j = new Joystick(0);
 
 
 
@@ -90,7 +95,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-
+    arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
+    System.out.println("robot init");
   }
 
   /**
@@ -133,6 +139,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
+    arm.setZero();
+    arm.resetZero();
+    zeroCommand.start();
+    System.out.println("autonomous init");
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -145,6 +155,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
+
   }
 
   /**
@@ -153,6 +164,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    if (zeroCommand.isCompleted()){
+      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+    }
   }
 
   @Override
@@ -175,6 +189,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    if (zeroCommand.isCompleted()){
+      arm.incrementalLoop(OI.driveJoystick.getRawAxis(1) * 10);
+    }
 
     OI.pistonDeploy.whenPressed(pisOut);
     OI.pistonRetract.whenPressed(pisIn);
@@ -214,5 +231,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    System.out.println(Integer.toString(arm.getPosition()) + " zpos: " + Integer.toString(arm.zeroedpos));
   }
 }
