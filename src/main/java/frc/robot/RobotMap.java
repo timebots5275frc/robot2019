@@ -29,6 +29,11 @@ public class RobotMap {
 
   public static int PUSHER_VICTOR = 5;
 
+  public static int ARM_TALON = 3;
+  public static int SLIDE_TALON = 2;
+
+  public static int ARM_STOP_SWITCH = 4;
+
   public static final int Intake_dSolenoid1_Deploy = 1;
   public static final int Intake_dSolenoid1_Retract = 2;
   
