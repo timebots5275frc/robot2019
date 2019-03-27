@@ -29,6 +29,7 @@ public class ElevatorSeek extends Command {
     desiredpos = _pos;
     elevator = _elevator;
     maxOutput = _maxOutput;
+    requires(elevator);
   }
     /**
    *  Constructor
@@ -42,6 +43,7 @@ public class ElevatorSeek extends Command {
     elevator = _elevator;
     maxOutput = _maxOutput;
     holdProportion = _holdProportion;
+    requires(elevator);
   }
 
 

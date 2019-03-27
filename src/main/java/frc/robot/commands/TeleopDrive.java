@@ -26,7 +26,11 @@ public class TeleopDrive extends Command {
   @Override
   protected void execute() {
     double throt = (Robot.m_oi.driveJoystick.getRawAxis(3) / 2) +1;
-    DriveTrain.drive.arcadeDrive(Robot.m_oi.driveJoystick.getRawAxis(2) * (throt / 2), throt * Robot.m_oi.driveJoystick.getRawAxis(1) * -1);
+    double fwd = (throt * Robot.m_oi.driveJoystick.getRawAxis(1) * -1);
+    if (Robot.climbSeq.isRunning()){
+      fwd = Math.abs(fwd) * -1;
+    }
+    DriveTrain.drive.arcadeDrive(Robot.m_oi.driveJoystick.getRawAxis(2) * (throt / 2), fwd);
   }
 
   // Make this return true when this Command no longer needs to run execute()
