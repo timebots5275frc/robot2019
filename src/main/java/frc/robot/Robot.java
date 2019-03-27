@@ -29,10 +29,12 @@ import frc.robot.OI;
 import frc.robot.commands.IntakePistonIn;
 import frc.robot.commands.IntakePistonOut;
 import frc.robot.subsystems.Arm;
+import frc.robot.commands.ArmExtend;
 import frc.robot.commands.ArmZero;
-import frc.robot.commands.CompressorOff;
-import frc.robot.commands.CompressorOn;
+import frc.robot.commands.ClimbSequence;
 import frc.robot.commands.ElevatorSeek;
+import frc.robot.subsystems.LinearSlide;
+import frc.robot.subsystems.RearElevator;
 
 
 
@@ -56,30 +58,32 @@ public class Robot extends TimedRobot {
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   ArmZero zeroCommand = new ArmZero();
+  public static ArmExtend extendCommand = new ArmExtend();
+  double jval = 0.0;
+  
 
-  Elevator rearElevator = new Elevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
+  public static RearElevator rearElevator = new RearElevator(new DigitalInput(RobotMap.REAR_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.REAR_LOW_LIMIT),
                                        new VictorSPX(RobotMap.REAR_ELEVATOR_VICTOR),
                                        false,
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .3, 0.0),
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -.4, .5)
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .4, 0.0),
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -1.0, .5)
                                        );
-  Elevator frontElevator = new Elevator(new DigitalInput(RobotMap.FRONT_HIGH_LIMIT),
+ public static Elevator frontElevator = new Elevator(new DigitalInput(RobotMap.FRONT_HIGH_LIMIT),
                                        new DigitalInput(RobotMap.FRONT_LOW_LIMIT),
                                        new VictorSPX(RobotMap.FRONT_ELEVATOR_VICTOR),
                                        false,
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .5),
-                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -1)
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.HIGH, .7),
+                                       new ElevatorSeek(new Elevator(), ElevatorPosition.LOW, -.7) // -1
                                        );
 
-  
+  public static ClimbSequence climbSeq = new ClimbSequence();
   public TeleopDrive teleopDriveCommand = new TeleopDrive();
 
-  //DO NOT COMMIT
   private VictorSPX pusher = new VictorSPX(RobotMap.PUSHER_VICTOR);
 
   public static Arm arm = new Arm();
-  public Joystick j = new Joystick(0);
+  public static LinearSlide slide = new LinearSlide();
 
 
 
@@ -96,7 +100,9 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
+    slide.init(0, 5, 0, 0);
     System.out.println("robot init");
+
   }
 
   /**
@@ -138,11 +144,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    
+    teleopDriveCommand.start();
     m_autonomousCommand = m_chooser.getSelected();
     arm.setZero();
     arm.resetZero();
     zeroCommand.start();
     System.out.println("autonomous init");
+    rearElevator.retractCommand.start();
+    
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -165,8 +175,15 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
     if (zeroCommand.isCompleted()){
-      arm.incrementalLoop(OI.xbController.getRawAxis(5) * 10);
+      jval = OI.xbController.getRawAxis(5);
+      if (jval < 0.1 && jval > -0.1){
+        jval = 0.0;
+      }
+      if (!extendCommand.isRunning()){
+        arm.incrementalLoop(jval * 10);
+      }
     }
+    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
   }
 
   @Override
@@ -178,6 +195,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    teleopDriveCommand.cancel();
     teleopDriveCommand.start();
 
     
@@ -190,36 +208,50 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     if (zeroCommand.isCompleted()){
-      arm.incrementalLoop(OI.xbController.getRawAxis(5) * 10);
+      jval = OI.xbController.getRawAxis(5);
+      if (jval < 0.1 && jval > -0.1){
+        jval = 0.0;
+      }      
+      if (!extendCommand.isRunning()){
+        arm.incrementalLoop(jval * 20);
+      }
     }
+    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
 
     OI.pistonDeploy.whenPressed(pisOut);
     OI.pistonRetract.whenPressed(pisIn);
 
     if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
-      rearElevator.cancelAll();
+      // rearElevator.cancelAll();
       rearElevator.retractCommand.start();
     }if (OI.xbController.getRawButton(2) && !rearElevator.deployCommand.isRunning()) {
-      rearElevator.cancelAll();
+      // rearElevator.cancelAll();
       rearElevator.deployCommand.start();
     }if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
-      frontElevator.cancelAll();
+      //the 'retract' command is actually what extends the elevator 
+      // frontElevator.cancelAll();
       frontElevator.retractCommand.start();
     }if (OI.xbController.getRawButton(4) && !frontElevator.deployCommand.isRunning()) {
-      frontElevator.cancelAll();
+      // frontElevator.cancelAll();
       frontElevator.deployCommand.start();
     }
-    if (OI.xbController.getRawButton(5)){
-      pusher.set(ControlMode.PercentOutput, (OI.xbController.getRawAxis(1) * .4));
-      System.out.println((OI.xbController.getRawAxis(1) * .4));
+    if (climbSeq.isRunning()){
+      pusher.set(ControlMode.PercentOutput, .3);
+    }else if (OI.xbController.getRawButton(5)){
+      pusher.set(ControlMode.PercentOutput, Math.abs(OI.xbController.getRawAxis(1) * -.4));
     }
     else{
       pusher.set(ControlMode.PercentOutput, 0.0);
     }
     if (OI.xbController.getRawButton(6)){
       System.out.println("elevator cancel");
-      frontElevator.cancelAll();
-      rearElevator.cancelAll();
+      // frontElevator.cancelAll();
+      // rearElevator.cancelAll();
+    }
+    if (OI.driveJoystick.getRawButton(11)){
+      climbSeq.start();
+    }else if (OI.driveJoystick.getRawButton(12)){
+      climbSeq.cancel();
     }
 
 
