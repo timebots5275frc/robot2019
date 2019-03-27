@@ -8,48 +8,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.subsystems.CompressorControl;
+import edu.wpi.first.wpilibj.Timer;
 
-public class IntakePistonIn extends Command {
-  public IntakePistonIn() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.compressor);
+public class Delay extends Command {
+  int delay;
+  Timer time = new Timer();
+  /**
+   * Constructor
+   * @param _delay the time to delay in milliseconds
+   */
+  public Delay(int _delay) {
+    delay = _delay;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-  }
+    time.start();
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    System.out.println("intakepin");
-    Robot.intakePneumatics.retract();
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //System.out.print(Robot.intakePneumatics.solenoidOn);
-    if (Robot.intakePneumatics.solenoidOn == false ) {
-      return true;
-    } else {
-      return false;
-    }
+    if (time.hasPeriodPassed(delay * 1000)) return true;
+    else return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    time.stop();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }

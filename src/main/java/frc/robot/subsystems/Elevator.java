@@ -20,7 +20,7 @@ public class Elevator extends Subsystem {
   // here. Call these from Commands.
   public DigitalInput highSwitch, lowSwitch;
   public VictorSPX victor;
-  private boolean invertSwitches = false;
+  protected boolean invertSwitches = false;
   public ElevatorSeek deployCommand ; //= new ElevatorSeek(this, ElevatorPosition.HIGH, .5);
   public ElevatorSeek retractCommand; // = new ElevatorSeek(this, ElevatorPosition.LOW, -.5);
 
@@ -85,8 +85,8 @@ public class Elevator extends Subsystem {
     return ElevatorPosition.values()[i];
   }
   public void cancelAll(){
-    deployCommand.cancel();
-    retractCommand.cancel();
+    // deployCommand.cancel();
+    // retractCommand.cancel();
   }
 
   private boolean _getSwitch(DigitalInput input){
