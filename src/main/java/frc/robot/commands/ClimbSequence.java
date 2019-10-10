@@ -29,7 +29,8 @@ public class ClimbSequence extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-    addSequential(Robot.extendCommand);
+    
+    //addSequential(Robot.extendCommand);
     addParallel(Robot.frontElevator.retractCommand);
     addSequential(Robot.rearElevator.deployCommand);
     // add a delay so that robot operators have more time for the pushers to be automated%

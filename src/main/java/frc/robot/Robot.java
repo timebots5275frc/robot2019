@@ -24,18 +24,25 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.subsystems.CompressorControl;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 import frc.robot.OI;
-import frc.robot.commands.IntakePistonIn;
-import frc.robot.commands.IntakePistonOut;
-import frc.robot.subsystems.Arm;
-import frc.robot.commands.ArmExtend;
-import frc.robot.commands.ArmZero;
+
 import frc.robot.commands.ClimbSequence;
 import frc.robot.commands.ElevatorSeek;
-import frc.robot.subsystems.LinearSlide;
 import frc.robot.subsystems.RearElevator;
 
+/**
+ * import frc.robot.subsystems.LinearSlide;
+ * 
+ * import frc.robot.commands.ArmZero;
+ * import frc.robot.commands.ArmExtend;
+ * import frc.robot.subsystems.Arm;
+ * 
+ * import frc.robot.subsystems.Intake;
+ * 
+ * import frc.robot.commands.IntakePistonIn;
+ * import frc.robot.commands.IntakePistonOut;
+ * 
+ */
 
 
 /**
@@ -49,16 +56,16 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static CompressorControl compressor = new CompressorControl();
   
-  public static Intake intakePneumatics = new Intake();
+  // public static Intake intakePneumatics = new Intake();
   public static OI m_oi;
 
   Command m_autonomousCommand;
-  IntakePistonIn pisIn = new IntakePistonIn();
-  IntakePistonOut pisOut = new IntakePistonOut();
+  // IntakePistonIn pisIn = new IntakePistonIn();
+  // IntakePistonOut pisOut = new IntakePistonOut();
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  ArmZero zeroCommand = new ArmZero();
-  public static ArmExtend extendCommand = new ArmExtend();
+  // ArmZero zeroCommand = new ArmZero();
+  // public static ArmExtend extendCommand = new ArmExtend();
   double jval = 0.0;
   
 
@@ -82,8 +89,8 @@ public class Robot extends TimedRobot {
 
   private VictorSPX pusher = new VictorSPX(RobotMap.PUSHER_VICTOR);
 
-  public static Arm arm = new Arm();
-  public static LinearSlide slide = new LinearSlide();
+  // public static Arm arm = new Arm();
+  // public static LinearSlide slide = new LinearSlide();
 
 
 
@@ -99,8 +106,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-    arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
-    slide.init(0, 5, 0, 0);
+    // arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
+    // slide.init(0, 5, 0, 0);
     System.out.println("robot init");
 
   }
@@ -147,9 +154,9 @@ public class Robot extends TimedRobot {
     
     teleopDriveCommand.start();
     m_autonomousCommand = m_chooser.getSelected();
-    arm.setZero();
-    arm.resetZero();
-    zeroCommand.start();
+    // arm.setZero();
+    // arm.resetZero();
+    // zeroCommand.start();
     System.out.println("autonomous init");
     rearElevator.retractCommand.start();
     
@@ -174,16 +181,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    if (zeroCommand.isCompleted()){
-      jval = OI.xbController.getRawAxis(5);
-      if (jval < 0.1 && jval > -0.1){
-        jval = 0.0;
-      }
-      if (!extendCommand.isRunning()){
-        arm.incrementalLoop(jval * 10);
-      }
-    }
-    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
+    // if (zeroCommand.isCompleted()){
+    //   jval = OI.xbController.getRawAxis(5);
+    //   if (jval < 0.1 && jval > -0.1){
+    //     jval = 0.0;
+    //   }
+    //   if (!extendCommand.isRunning()){
+    //     arm.incrementalLoop(jval * 10);
+    //   }
+    // }
+    // slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
   }
 
   @Override
@@ -207,19 +214,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    if (zeroCommand.isCompleted()){
-      jval = OI.xbController.getRawAxis(5);
-      if (jval < 0.1 && jval > -0.1){
-        jval = 0.0;
-      }      
-      if (!extendCommand.isRunning()){
-        arm.incrementalLoop(jval * 20);
-      }
-    }
-    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
+    // if (zeroCommand.isCompleted()){
+    //   jval = OI.xbController.getRawAxis(5);
+    //   if (jval < 0.1 && jval > -0.1){
+    //     jval = 0.0;
+    //   }      
+    //   if (!extendCommand.isRunning()){
+    //     arm.incrementalLoop(jval * 20);
+    //   }
+    // }
+    // slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
 
-    OI.pistonDeploy.whenPressed(pisOut);
-    OI.pistonRetract.whenPressed(pisIn);
+    // OI.pistonDeploy.whenPressed(pisOut);
+    // OI.pistonRetract.whenPressed(pisIn);
 
     if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
       // rearElevator.cancelAll();
@@ -263,6 +270,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    System.out.println(Integer.toString(arm.getPosition()) + " zpos: " + Integer.toString(arm.zeroedpos));
+    // System.out.println(Integer.toString(arm.getPosition()) + " zpos: " + Integer.toString(arm.zeroedpos));
   }
 }

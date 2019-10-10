@@ -30,7 +30,7 @@ public class RobotMap {
   public static int PUSHER_VICTOR = 5;
 
   public static int ARM_TALON = 3;
-  public static int SLIDE_TALON = 2;
+  public static int BALL_INTAKE_TALON = 2; // The New Ball Intake  previous "SLIDE_TALON"
 
   public static int ARM_STOP_SWITCH = 4;
 
