@@ -28,6 +28,9 @@ import frc.robot.OI;
 
 import frc.robot.commands.ClimbSequence;
 import frc.robot.commands.ElevatorSeek;
+import frc.robot.commands.IntakePistonIn;
+import frc.robot.commands.IntakePistonOut;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.RearElevator;
 
 /**
@@ -56,12 +59,12 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static CompressorControl compressor = new CompressorControl();
   
-  // public static Intake intakePneumatics = new Intake();
+  public static Intake Cargo_Intake = new Intake();
   public static OI m_oi;
 
   Command m_autonomousCommand;
-  // IntakePistonIn pisIn = new IntakePistonIn();
-  // IntakePistonOut pisOut = new IntakePistonOut();
+  IntakePistonIn pisIn = new IntakePistonIn();
+  IntakePistonOut pisOut = new IntakePistonOut();
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // ArmZero zeroCommand = new ArmZero();
@@ -225,9 +228,10 @@ public class Robot extends TimedRobot {
     // }
     // slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
 
-    // OI.pistonDeploy.whenPressed(pisOut);
-    // OI.pistonRetract.whenPressed(pisIn);
 
+
+    /*
+    Not deleting this because it should serve as a reminder to all who come after to never join an FRC team
     if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
       // rearElevator.cancelAll();
       rearElevator.retractCommand.start();
@@ -235,13 +239,18 @@ public class Robot extends TimedRobot {
       // rearElevator.cancelAll();
       rearElevator.deployCommand.start();
     }if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
-      //the 'retract' command is actually what extends the elevator 
+      // the 'retract' command is actually what extends the elevator 
       // frontElevator.cancelAll();
       frontElevator.retractCommand.start();
-    }if (OI.xbController.getRawButton(4) && !frontElevator.deployCommand.isRunning()) {
+    }*/
+
+    // RETRACTS FRONT ELEVATOR 
+    /*if (OI.driveJoystick.getRawButton(2) && !frontElevator.deployCommand.isRunning()) {
       // frontElevator.cancelAll();
       frontElevator.deployCommand.start();
-    }
+    }*/
+
+
     if (climbSeq.isRunning()){
       pusher.set(ControlMode.PercentOutput, .3);
     }else if (OI.xbController.getRawButton(5)){
@@ -256,11 +265,14 @@ public class Robot extends TimedRobot {
       // rearElevator.cancelAll();
     }
     if (OI.driveJoystick.getRawButton(11)){
+      climbSeq.cancel();
       climbSeq.start();
     }else if (OI.driveJoystick.getRawButton(12)){
-      climbSeq.cancel();
+      climbSeq.cancel();  
     }
 
+    OI.pistonDeploy.whenPressed(pisOut);
+    OI.pistonRetract.whenPressed(pisIn);
 
 
   }
