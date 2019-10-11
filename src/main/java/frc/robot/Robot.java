@@ -217,35 +217,36 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    // if (zeroCommand.isCompleted()){
-    //   jval = OI.xbController.getRawAxis(5);
-    //   if (jval < 0.1 && jval > -0.1){
-    //     jval = 0.0;
-    //   }      
-    //   if (!extendCommand.isRunning()){
-    //     arm.incrementalLoop(jval * 20);
-    //   }
-    // }
-    // slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
-
-
-
     /*
-    Not deleting this because it should serve as a reminder to all who come after to never join an FRC team
+    if (zeroCommand.isCompleted()){
+      jval = OI.xbController.getRawAxis(5);
+      if (jval < 0.1 && jval > -0.1){
+        jval = 0.0;
+      }      
+      if (!extendCommand.isRunning()){
+        arm.incrementalLoop(jval * 20);
+      }
+    }
+    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
+*/
+    OI.pistonDeploy.whenPressed(pisOut);
+    OI.pistonRetract.whenPressed(pisIn);
+    /*
     if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
       // rearElevator.cancelAll();
       rearElevator.retractCommand.start();
     }if (OI.xbController.getRawButton(2) && !rearElevator.deployCommand.isRunning()) {
       // rearElevator.cancelAll();
       rearElevator.deployCommand.start();
-    }if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
-      // the 'retract' command is actually what extends the elevator 
+    }*/
+    
+    if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
+      //the 'retract' command is actually what extends the elevator 
       // frontElevator.cancelAll();
       frontElevator.retractCommand.start();
-    }*/
-
-    // RETRACTS FRONT ELEVATOR 
-    /*if (OI.driveJoystick.getRawButton(2) && !frontElevator.deployCommand.isRunning()) {
+    }
+    
+    if (OI.xbController.getRawButton(4) && !frontElevator.deployCommand.isRunning()) {
       // frontElevator.cancelAll();
       frontElevator.deployCommand.start();
     }*/
