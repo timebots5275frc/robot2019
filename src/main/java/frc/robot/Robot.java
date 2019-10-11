@@ -106,11 +106,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
-    // arm.init(0, 5, 0, 0, new DigitalInput(RobotMap.ARM_STOP_SWITCH));
-    // slide.init(0, 5, 0, 0);
     System.out.println("robot init");
 
   }
@@ -184,16 +179,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    // if (zeroCommand.isCompleted()){
-    //   jval = OI.xbController.getRawAxis(5);
-    //   if (jval < 0.1 && jval > -0.1){
-    //     jval = 0.0;
-    //   }
-    //   if (!extendCommand.isRunning()){
-    //     arm.incrementalLoop(jval * 10);
-    //   }
-    // }
-    // slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
   }
 
   @Override
@@ -216,66 +201,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
-    /*
-    if (zeroCommand.isCompleted()){
-      jval = OI.xbController.getRawAxis(5);
-      if (jval < 0.1 && jval > -0.1){
-        jval = 0.0;
-      }      
-      if (!extendCommand.isRunning()){
-        arm.incrementalLoop(jval * 20);
-      }
-    }
-    slide._talon.set(ControlMode.PercentOutput, OI.xbController.getRawAxis(4)* -.4);
-*/
-    OI.pistonDeploy.whenPressed(pisOut);
-    OI.pistonRetract.whenPressed(pisIn);
-    /*
-    if (OI.xbController.getRawButton(1) && !rearElevator.retractCommand.isRunning()) {
-      // rearElevator.cancelAll();
-      rearElevator.retractCommand.start();
-    }if (OI.xbController.getRawButton(2) && !rearElevator.deployCommand.isRunning()) {
-      // rearElevator.cancelAll();
-      rearElevator.deployCommand.start();
-    }*/
-    
-    if (OI.xbController.getRawButton(3) && !frontElevator.retractCommand.isRunning()) {
-      //the 'retract' command is actually what extends the elevator 
-      // frontElevator.cancelAll();
-      frontElevator.retractCommand.start();
-    }
-    
-    if (OI.xbController.getRawButton(4) && !frontElevator.deployCommand.isRunning()) {
+    Scheduler.getInstance().run();  
+    if (OI.driveJoystick.getRawButton(10) && !frontElevator.deployCommand.isRunning()) {
+      // retracts front elevator
       // frontElevator.cancelAll();
       frontElevator.deployCommand.start();
-    }*/
-
-
+    }
     if (climbSeq.isRunning()){
       pusher.set(ControlMode.PercentOutput, .3);
-    }else if (OI.xbController.getRawButton(5)){
-      pusher.set(ControlMode.PercentOutput, Math.abs(OI.xbController.getRawAxis(1) * -.4));
     }
     else{
       pusher.set(ControlMode.PercentOutput, 0.0);
     }
-    if (OI.xbController.getRawButton(6)){
-      System.out.println("elevator cancel");
-      // frontElevator.cancelAll();
-      // rearElevator.cancelAll();
-    }
     if (OI.driveJoystick.getRawButton(11)){
       climbSeq.cancel();
       climbSeq.start();
-    }else if (OI.driveJoystick.getRawButton(12)){
+    }
+    else if (OI.driveJoystick.getRawButton(12)){
       climbSeq.cancel();  
     }
-
     OI.pistonDeploy.whenPressed(pisOut);
     OI.pistonRetract.whenPressed(pisIn);
-
-
   }
 
   /**

@@ -33,7 +33,7 @@ public class ClimbSequence extends CommandGroup {
     addSequential(Robot.rearElevator.deployCommand);
     // add a delay so that robot operators have more time for the pushers to be automated%
     addSequential(new Delay(3500));
-    addSequential(Robot.frontElevator.deployCommand);
+    // addSequential(Robot.frontElevator.deployCommand);
   }
 
 }
