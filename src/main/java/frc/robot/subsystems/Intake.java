@@ -11,6 +11,9 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 
 /**
  * Add your docs here.
@@ -22,6 +25,8 @@ public class Intake extends Subsystem {
   DoubleSolenoid dSolenoid1 = new DoubleSolenoid(RobotMap.Intake_dSolenoid1_Deploy, RobotMap.Intake_dSolenoid1_Retract);
   public boolean solenoidOn = false;
 
+  TalonSRX intakeMotor =  new TalonSRX(RobotMap.BALL_INTAKE_TALON);
+
   public void deploy(){
     dSolenoid1.set(DoubleSolenoid.Value.kForward);
     solenoidOn = true;
@@ -30,6 +35,12 @@ public class Intake extends Subsystem {
   public void undeploy(){
     dSolenoid1.set(DoubleSolenoid.Value.kReverse);
     solenoidOn = false;
+  }
+
+  public void setMotor(double speed) {
+    if (-1 <= speed && speed <= 1) {
+      intakeMotor.set(ControlMode.PercentOutput, speed);
+    }
   }
 
   @Override

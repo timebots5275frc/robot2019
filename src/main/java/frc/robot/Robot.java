@@ -207,6 +207,7 @@ public class Robot extends TimedRobot {
       // frontElevator.cancelAll();
       frontElevator.deployCommand.start();
     }
+    else if (OI.driveJoystick.getRawButton(9) && frontElevator.deployCommand.isRunning()) frontElevator.deployCommand.cancel();
     if (climbSeq.isRunning()){
       pusher.set(ControlMode.PercentOutput, .3);
     }
@@ -220,8 +221,14 @@ public class Robot extends TimedRobot {
     else if (OI.driveJoystick.getRawButton(12)){
       climbSeq.cancel();  
     }
+
     OI.pistonDeploy.whenPressed(pisOut);
     OI.pistonRetract.whenPressed(pisIn);
+
+    if (OI.intakeIn.get()) Cargo_Intake.setMotor(1);
+    else if (OI.intakeOut.get()) Cargo_Intake.setMotor(-1);
+    else Cargo_Intake.setMotor(.5);
+    
   }
 
   /**

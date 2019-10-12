@@ -23,6 +23,10 @@ public class OI {
   public static Button pistonDeploy = new JoystickButton(driveJoystick, 3);
   public static Button pistonRetract = new JoystickButton(driveJoystick, 4);
 
+  public static Button intakeIn = new JoystickButton(driveJoystick, 5);
+  public static Button intakeOut = new JoystickButton(driveJoystick, 6);  
+  
+
   public static Button button1 = new JoystickButton(driveJoystick, 7);
   public static Button button2 = new JoystickButton(driveJoystick, 8);
   
